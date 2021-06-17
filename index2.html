@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<title>Pole-Zero placement v2 | EarLevel Engineering</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="stylesheet" type="text/css" media="all" href="https://www.earlevel.com/main/wp-content/themes/twentyten-child/style.css" />
+<link rel="pingback" href="https://www.earlevel.com/main/xmlrpc.php" />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="EarLevel Engineering &raquo; Feed" href="https://www.earlevel.com/main/feed/" />
+<link rel="alternate" type="application/rss+xml" title="EarLevel Engineering &raquo; Comments Feed" href="https://www.earlevel.com/main/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="EarLevel Engineering &raquo; Pole-Zero placement v2 Comments Feed" href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.earlevel.com\/main\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.3.8"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://www.earlevel.com/main/wp-includes/css/dist/block-library/style.min.css?ver=5.3.8' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-theme-css'  href='https://www.earlevel.com/main/wp-includes/css/dist/block-library/theme.min.css?ver=5.3.8' type='text/css' media='all' />
+<link rel='stylesheet' id='parent-style-css'  href='https://www.earlevel.com/main/wp-content/themes/twentyten/style.css?ver=5.3.8' type='text/css' media='all' />
+<link rel='stylesheet' id='child-style-css'  href='https://www.earlevel.com/main/wp-content/themes/twentyten-child/style.css?ver=1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='twentyten-block-style-css'  href='https://www.earlevel.com/main/wp-content/themes/twentyten/blocks.css?ver=20181018' type='text/css' media='all' />
+<script type='text/javascript' src='https://www.earlevel.com/main/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+<script type='text/javascript' src='https://www.earlevel.com/main/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<link rel='https://api.w.org/' href='https://www.earlevel.com/main/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.earlevel.com/main/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.earlevel.com/main/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Biquad calculator v2' href='https://www.earlevel.com/main/2013/10/13/biquad-calculator-v2/' />
+<link rel='next' title='More about source code' href='https://www.earlevel.com/main/2014/01/09/more-about-source-code/' />
+<link rel="canonical" href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/" />
+<link rel='shortlink' href='https://www.earlevel.com/main/?p=219' />
+<link rel="alternate" type="application/json+oembed" href="https://www.earlevel.com/main/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.earlevel.com%2Fmain%2F2013%2F10%2F28%2Fpole-zero-placement-v2%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.earlevel.com/main/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.earlevel.com%2Fmain%2F2013%2F10%2F28%2Fpole-zero-placement-v2%2F&#038;format=xml" />
+<script type="text/javascript">
+(function(url){
+	if(/(?:Chrome\/26\.0\.1410\.63 Safari\/537\.31|WordfenceTestMonBot)/.test(navigator.userAgent)){ return; }
+	var addEvent = function(evt, handler) {
+		if (window.addEventListener) {
+			document.addEventListener(evt, handler, false);
+		} else if (window.attachEvent) {
+			document.attachEvent('on' + evt, handler);
+		}
+	};
+	var removeEvent = function(evt, handler) {
+		if (window.removeEventListener) {
+			document.removeEventListener(evt, handler, false);
+		} else if (window.detachEvent) {
+			document.detachEvent('on' + evt, handler);
+		}
+	};
+	var evts = 'contextmenu dblclick drag dragend dragenter dragleave dragover dragstart drop keydown keypress keyup mousedown mousemove mouseout mouseover mouseup mousewheel scroll'.split(' ');
+	var logHuman = function() {
+		if (window.wfLogHumanRan) { return; }
+		window.wfLogHumanRan = true;
+		var wfscr = document.createElement('script');
+		wfscr.type = 'text/javascript';
+		wfscr.async = true;
+		wfscr.src = url + '&r=' + Math.random();
+		(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(wfscr);
+		for (var i = 0; i < evts.length; i++) {
+			removeEvent(evts[i], logHuman);
+		}
+	};
+	for (var i = 0; i < evts.length; i++) {
+		addEvent(evts[i], logHuman);
+	}
+})('//www.earlevel.com/main/?wordfence_lh=1&hid=0DCA615A2402BA36C006CC14427AAE7C');
+</script></head>
+
+<body class="post-template-default single single-post postid-219 single-format-standard">
+<div id="wrapper" class="hfeed">
+	<div id="header">
+		<div id="masthead">
+			<div id="branding" role="banner">
+								<div id="site-title">
+					<span>
+					<a href="https://www.earlevel.com/main" rel="home" title="EarLevel Engineering">
+					<img src="https://www.earlevel.com/main/wp-content/uploads/2010/11/EarLevel-logo.png" alt="EarLevel Engineering" />
+					</a>
+					</span>
+				</div>
+				<div id="site-description">Practical digital audio signal processing</div>
+
+										<img src="https://www.earlevel.com/main/wp-content/themes/twentyten-child/images/EarLevel-header.png" width="940" height="198" alt="" />
+								</div><!-- #branding -->
+
+			<div id="access" role="navigation">
+			  				<div class="skip-link screen-reader-text"><a href="#content" title="Skip to content">Skip to content</a></div>
+								<div class="menu-header"><ul id="menu-main" class="menu"><li id="menu-item-431" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-431"><a href="http://www.earlevel.com/main/">Home</a></li>
+<li id="menu-item-432" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-432"><a href="https://www.earlevel.com/main/about/">About</a></li>
+<li id="menu-item-435" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-435"><a href="https://www.earlevel.com/main/category/widgets/">Widgets</a></li>
+</ul></div>			</div><!-- #access -->
+		</div><!-- #masthead -->
+	</div><!-- #header -->
+
+	<div id="main">
+
+		<div id="container">
+			<div id="content" role="main">
+
+			
+
+				<div id="nav-above" class="navigation">
+					<div class="nav-previous"><a href="https://www.earlevel.com/main/2013/10/13/biquad-calculator-v2/" rel="prev"><span class="meta-nav">&larr;</span> Biquad calculator v2</a></div>
+					<div class="nav-next"><a href="https://www.earlevel.com/main/2014/01/09/more-about-source-code/" rel="next">More about source code <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-above -->
+
+				<div id="post-219" class="post-219 post type-post status-publish format-standard hentry category-biquads category-digital-audio category-filters category-iir-filters category-widgets">
+					<h1 class="entry-title">Pole-Zero placement v2</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted on</span> <a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/" title="5:50 pm" rel="bookmark"><span class="entry-date">October 28, 2013</span></a> <span class="meta-sep">by</span> <span class="author vcard"><a class="url fn n" href="https://www.earlevel.com/main/author/codehead/" title="View all posts by Nigel Redmon">Nigel Redmon</a></span>					</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<div id="magnitude_polezero2" style="width:600px; height:200px;"></div>
+</p>
+<table style="border: none; border-collapse: collapse; padding: 0px 0px; vertical-align: center;">
+<tr style="border:none; border-collapse: collapse; padding: 0px 0px;">
+<td style="border:none; border-collapse: collapse; padding: 0px 0px; width: 228px; height: 228px;">
+<canvas id="zplane_polezero2" width="228" height="228"></canvas>
+</td>
+<td style="border: none; border-collapse: collapse; padding: 0px 0px; vertical-align: top">
+<table style="border: none; border-collapse: collapse; padding: 0px 0px;">
+<tr>
+<td rowspan="2" style="border:none; border-collapse: collapse; padding: 0px 6px; vertical-align: middle; width: 40px;">
+<label><input type="checkbox" id="polePair_polezero2" checked="true" onchange='updateSliderNames(); updateValues(); updateZplane();'> Pair </label>
+</td>
+<td style="border: none; border-collapse: collapse; padding: 0px 0px; width: 80px;">
+<input id="pole1_polezero2_field" value="0.5" style="text-align:right;width:4em;margin: 0 6px 6px 0;" type="text" onchange='updateSlider("pole1_polezero2"); updateZplane();' />
+</td>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px; width: 150px;">
+<input type="range" min="0" max="200" value="100" id="pole1_polezero2" onchange='updateValue("pole1_polezero2"); updateZplane();' oninput='updateValue("pole1_polezero2"); updateZplane();'>
+</td>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+<output id="p1_name_polezero2" rows="1" cols="12" readonly="readonly">Pole mag</output>
+</td>
+</tr>
+<tr>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+<input id="pole2_polezero2_field" value="0.25" style="text-align:right;width:4em;margin: 0 6px 6px 0;" type="text" onchange='updateSlider("pole2_polezero2"); updateZplane();' />
+</td>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+<input type="range" min="0" max="200" value="50" id="pole2_polezero2" onchange='updateValue("pole2_polezero2"); updateZplane();' oninput='updateValue("pole2_polezero2"); updateZplane();'>
+</td>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+<output id="p2_name_polezero2" rows="1" cols="12" readonly="readonly">Pole angle</output>
+</td>
+</tr>
+<tr>
+<td rowspan="2" style="border:none; border-collapse: collapse; padding: 0px 6px; vertical-align: middle;">
+<label><input type="checkbox" id="zeroPair_polezero2" checked="true" onchange='updateSliderNames(); updateValues(); updateZplane();'> Pair </label>
+</td>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+<input id="zero1_polezero2_field" value="1" style="text-align:right;width:4em;margin: 0 6px 6px 0;" type="text" onchange='updateSlider("zero1_polezero2"); updateZplane();' />
+</td>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+<input type="range" min="0" max="200" value="200" id="zero1_polezero2" onchange='updateValue("zero1_polezero2"); updateZplane();' oninput='updateValue("zero1_polezero2"); updateZplane();'>
+</td>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+<output id="z1_name_polezero2" rows="1" cols="12" readonly="readonly">Zero mag</output>
+</td>
+</tr>
+<tr>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+<input id="zero2_polezero2_field" value="1" style="text-align:right;width:4em;margin: 0 6px 6px 0;" type="text" onchange='updateSlider("zero2_polezero2"); updateZplane();' />
+</td>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+<input type="range" min="0" max="200" value="200" id="zero2_polezero2" onchange='updateValue("zero2_polezero2"); updateZplane();' oninput='updateValue("zero2_polezero2"); updateZplane();'>
+</td>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+<output id="z2_name_polezero2" rows="1" cols="12" readonly="readonly">Zero angle</output>
+</td>
+</tr>
+<tr>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+</td>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+<input id="Fs_polezero2" value="44100" style="text-align:right;width:4em;margin: 0 6px 6px 0;" type="text" onchange='updateZplane();'>
+</td>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+Sample rate (Hz)
+</td>
+</tr>
+<tr>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+</td>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+<select id="plotType_polezero2" onchange='updateZplane();'><option value="linear">linear</option><option value="log">log</option></select>
+</td>
+<td style="border:none; border-collapse: collapse; padding: 0px 0px;">
+Plot
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<p><textarea id="coefsList_polezero2" rows="8" cols="64" readonly="readonly"></textarea></p>
+<h3>A new pole-zero calculator</h3>
+<p>An JavaScript remake of the old Java-based pole-zero placement <a href="/main/2003/02/27/pole-zero-placement/">applet</a>—visit that page for tips on pole-zero locations for standard biquads. The main additions are input fields for precision pole-zero placement, and an option to display the response with a log frequency scale.</p>
+<p>The basic idea is that poles blow, zeros suck. Think of poles as controlling a frequency-dependent feedback or resonance—the impulse response of a pole inside the unit circle decays, while one outside is like runaway feedback (think of a mic feeding back into a loudspeaker). A pole on the unit circle gives a sustained oscillation (but watch out for numerical errors—keep your poles inside the unit circle, typically). Zeros absorb a particular frequency; when on the unit circle, they absorb the corresponding frequency completely.</p>
+<p>So, poles push the frequency response up around their corresponding frequency, and zeros pull down around theirs. Keep in mind that the frequency response graph is normalized, just as the filter coefficients are. So, while a pole pushes up the response, it appears as though all other frequencies are being pushed down instead. Of course, normalization is important in practical application, but be aware of it when visualizing how poles and zeros interact.<br />
+<script type="text/javascript" src="/scripts/utils/flotr2.min.js"></script><script type="text/javascript" src="/scripts/widgets/20131028/PoleZero2.js"></script></p>
+											</div><!-- .entry-content -->
+
+		
+						<div class="entry-utility">
+							This entry was posted in <a href="https://www.earlevel.com/main/category/digital-audio/filters/iir-filters/biquads/" rel="category tag">Biquads</a>, <a href="https://www.earlevel.com/main/category/digital-audio/" rel="category tag">Digital Audio</a>, <a href="https://www.earlevel.com/main/category/digital-audio/filters/" rel="category tag">Filters</a>, <a href="https://www.earlevel.com/main/category/digital-audio/filters/iir-filters/" rel="category tag">IIR Filters</a>, <a href="https://www.earlevel.com/main/category/widgets/" rel="category tag">Widgets</a>. Bookmark the <a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/" title="Permalink to Pole-Zero placement v2" rel="bookmark">permalink</a>.													</div><!-- .entry-utility -->
+					</div><!-- #post-219 -->
+
+					<div id="nav-below" class="navigation">
+						<div class="nav-previous"><a href="https://www.earlevel.com/main/2013/10/13/biquad-calculator-v2/" rel="prev"><span class="meta-nav">&larr;</span> Biquad calculator v2</a></div>
+						<div class="nav-next"><a href="https://www.earlevel.com/main/2014/01/09/more-about-source-code/" rel="next">More about source code <span class="meta-nav">&rarr;</span></a></div>
+					</div><!-- #nav-below -->
+
+					
+			<div id="comments">
+
+
+			<h3 id="comments-title">
+			13 Responses to <em>Pole-Zero placement v2</em>			</h3>
+
+	
+			<ol class="commentlist">
+						<li class="comment even thread-even depth-1" id="li-comment-25077">
+		<div id="comment-25077">
+			<div class="comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/622ea3008b2bbcd4dd67d966b2c622cb?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/622ea3008b2bbcd4dd67d966b2c622cb?s=80&#038;d=mm&#038;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />				<cite class="fn">Piezo</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+				
+			<div class="comment-meta commentmetadata"><a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/#comment-25077">
+				April 17, 2014 at 3:47 am					</a>
+									</div><!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body"><p>I found a very nice web app showing interactive filter design with direct visualization in frequency domain and z-domain ( poles and zeros ) :<br />
+<a href="http://www.micromodeler.com/dsp/" rel="nofollow ugc">http://www.micromodeler.com/dsp/</a></p>
+<p>This is intended for embedded dsp applications, but it&#8217;s still a incredibly useful pedagogical material.</p>
+</div>
+
+				<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/?replytocom=25077#respond' data-commentid="25077" data-postid="219" data-belowelement="comment-25077" data-respondelement="respond" aria-label='Reply to Piezo'>Reply</a>				</div><!-- .reply -->
+			</div><!-- #comment-##  -->
+
+				<ul class="children">
+		<li class="comment byuser comment-author-codehead bypostauthor odd alt depth-2" id="li-comment-25084">
+		<div id="comment-25084">
+			<div class="comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/eac3fa758886f87242004fc60f9a6d40?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/eac3fa758886f87242004fc60f9a6d40?s=80&#038;d=mm&#038;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />				<cite class="fn">Nigel Redmon</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+				
+			<div class="comment-meta commentmetadata"><a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/#comment-25084">
+				April 17, 2014 at 10:13 am					</a>
+									</div><!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body"><p>Nice! Thanks</p>
+</div>
+
+				<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/?replytocom=25084#respond' data-commentid="25084" data-postid="219" data-belowelement="comment-25084" data-respondelement="respond" aria-label='Reply to Nigel Redmon'>Reply</a>				</div><!-- .reply -->
+			</div><!-- #comment-##  -->
+
+				</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1" id="li-comment-27127">
+		<div id="comment-27127">
+			<div class="comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/d69c56ac6c3cd947d49a13a6df3caeca?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/d69c56ac6c3cd947d49a13a6df3caeca?s=80&#038;d=mm&#038;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />				<cite class="fn"><a href='http://www.patchmorpher.com' rel='external nofollow ugc' class='url'>Richard</a></cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+				
+			<div class="comment-meta commentmetadata"><a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/#comment-27127">
+				July 4, 2014 at 9:26 am					</a>
+									</div><!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body"><p>Hi there,</p>
+<p>Very nice applet.</p>
+<p>Any chance you could add the phase graph too? i.e.: atan(Im(H)/Re(H)). I&#8217;d like to get a better intuitive idea of how that works.</p>
+<p>(And then, for a future version, could we manually select the number of poles &amp; zeros? Add support for all-pass filters&#8230; :o)</p>
+<p>Many thanks,<br />
+Richard.</p>
+</div>
+
+				<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/?replytocom=27127#respond' data-commentid="27127" data-postid="219" data-belowelement="comment-27127" data-respondelement="respond" aria-label='Reply to Richard'>Reply</a>				</div><!-- .reply -->
+			</div><!-- #comment-##  -->
+
+				<ul class="children">
+		<li class="comment byuser comment-author-codehead bypostauthor odd alt depth-2" id="li-comment-27451">
+		<div id="comment-27451">
+			<div class="comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/eac3fa758886f87242004fc60f9a6d40?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/eac3fa758886f87242004fc60f9a6d40?s=80&#038;d=mm&#038;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />				<cite class="fn">Nigel Redmon</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+				
+			<div class="comment-meta commentmetadata"><a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/#comment-27451">
+				July 23, 2014 at 3:56 pm					</a>
+									</div><!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body"><p>Hi Richard. I&#8217;ve thought many times about some of these features, and as you noted, one leads to another, and the only sound solution would be to go into the business of a making a commercial filter design software package, and I&#8217;d be heading far off track from what I&#8217;m trying to do&#8230;</p>
+<p>The phase plot is the most obvious, but in the end we&#8217;ve got a second order filter, for which you can look up the unexciting phase characteristics elsewhere, and they are simply an accepted byproduct of this type of filter. (That is, the parametric EQs in your analog mixing console and their digital equivalents in your DAW do the same thing—do you demand to see their phase response before purchasing? No, because you accept what that type of filter gives you.) Now, it would be very helpful as you add some of the other things you mentioned—more poles and zeros, all pass filter&#8230;then you&#8217;re back in the business of making a filter design package. 😉</p>
+<p>Nigel</p>
+</div>
+
+				<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/?replytocom=27451#respond' data-commentid="27451" data-postid="219" data-belowelement="comment-27451" data-respondelement="respond" aria-label='Reply to Nigel Redmon'>Reply</a>				</div><!-- .reply -->
+			</div><!-- #comment-##  -->
+
+				</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="li-comment-38218">
+		<div id="comment-38218">
+			<div class="comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/634b50775d1b4d63feac21a6e413c0ec?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/634b50775d1b4d63feac21a6e413c0ec?s=80&#038;d=mm&#038;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />				<cite class="fn">Antony</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+				
+			<div class="comment-meta commentmetadata"><a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/#comment-38218">
+				April 15, 2015 at 7:36 am					</a>
+									</div><!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body"><p>This tool seems to be getting the signs for b1 and b2 the wrong way round, although that depends on how you write your equation;<br />
+In your other material you write  y[n] =  &#8230;. &#8211; b1 * y[n-1] &#8211; b2 * y[n-2]<br />
+In that case the signs are wrong, or rather, inconsistent with how you write the direct forms.</p>
+</div>
+
+				<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/?replytocom=38218#respond' data-commentid="38218" data-postid="219" data-belowelement="comment-38218" data-respondelement="respond" aria-label='Reply to Antony'>Reply</a>				</div><!-- .reply -->
+			</div><!-- #comment-##  -->
+
+				<ul class="children">
+		<li class="comment byuser comment-author-codehead bypostauthor odd alt depth-2" id="li-comment-38232">
+		<div id="comment-38232">
+			<div class="comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/eac3fa758886f87242004fc60f9a6d40?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/eac3fa758886f87242004fc60f9a6d40?s=80&#038;d=mm&#038;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />				<cite class="fn">Nigel Redmon</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+				
+			<div class="comment-meta commentmetadata"><a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/#comment-38232">
+				April 15, 2015 at 5:05 pm					</a>
+									</div><!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body"><p>Thank you for catching that, Anthony. While I was at it, I improved the log tick value scaling. I also took the opportunity to restore continuous update on slider movement (broken when Safari and Chrome fixed their errors in HTML5 interpretation).</p>
+</div>
+
+				<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/?replytocom=38232#respond' data-commentid="38232" data-postid="219" data-belowelement="comment-38232" data-respondelement="respond" aria-label='Reply to Nigel Redmon'>Reply</a>				</div><!-- .reply -->
+			</div><!-- #comment-##  -->
+
+				</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1" id="li-comment-42410">
+		<div id="comment-42410">
+			<div class="comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/3b6df7e42f91dd74ea4dd14ee367a0d6?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/3b6df7e42f91dd74ea4dd14ee367a0d6?s=80&#038;d=mm&#038;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />				<cite class="fn">mclaren</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+				
+			<div class="comment-meta commentmetadata"><a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/#comment-42410">
+				September 30, 2015 at 3:41 am					</a>
+									</div><!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body"><p>Clearest description I&#8217;ve ever read of poles and zeroes in the real world. Excellent!</p>
+</div>
+
+				<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/?replytocom=42410#respond' data-commentid="42410" data-postid="219" data-belowelement="comment-42410" data-respondelement="respond" aria-label='Reply to mclaren'>Reply</a>				</div><!-- .reply -->
+			</div><!-- #comment-##  -->
+
+				</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1" id="li-comment-45481">
+		<div id="comment-45481">
+			<div class="comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/89240171a6427ef4a55d6023555ef1a7?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/89240171a6427ef4a55d6023555ef1a7?s=80&#038;d=mm&#038;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />				<cite class="fn">Matthijs van Delft</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+				
+			<div class="comment-meta commentmetadata"><a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/#comment-45481">
+				April 15, 2016 at 12:58 am					</a>
+									</div><!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body"><p>To get a more complete example it would be great is the cut off frequency would be part of the parameters. It would also be very nice if the frequency on the -3dB point of the graph would be readable in some way.</p>
+<p>Nevertheless, thanks for the great explaination!</p>
+</div>
+
+				<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/?replytocom=45481#respond' data-commentid="45481" data-postid="219" data-belowelement="comment-45481" data-respondelement="respond" aria-label='Reply to Matthijs van Delft'>Reply</a>				</div><!-- .reply -->
+			</div><!-- #comment-##  -->
+
+				<ul class="children">
+		<li class="comment byuser comment-author-codehead bypostauthor even depth-2" id="li-comment-45485">
+		<div id="comment-45485">
+			<div class="comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/eac3fa758886f87242004fc60f9a6d40?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/eac3fa758886f87242004fc60f9a6d40?s=80&#038;d=mm&#038;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />				<cite class="fn">Nigel Redmon</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+				
+			<div class="comment-meta commentmetadata"><a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/#comment-45485">
+				April 15, 2016 at 9:23 am					</a>
+									</div><!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body"><p>Good idea, Matthijs. I’ll keep that in mind for the next time I have a chance to improve things.</p>
+</div>
+
+				<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/?replytocom=45485#respond' data-commentid="45485" data-postid="219" data-belowelement="comment-45485" data-respondelement="respond" aria-label='Reply to Nigel Redmon'>Reply</a>				</div><!-- .reply -->
+			</div><!-- #comment-##  -->
+
+				</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-51389">
+		<div id="comment-51389">
+			<div class="comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/317fdbefb209ca4b1cc713cc5294da84?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/317fdbefb209ca4b1cc713cc5294da84?s=80&#038;d=mm&#038;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />				<cite class="fn">Eugene</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+				
+			<div class="comment-meta commentmetadata"><a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/#comment-51389">
+				December 26, 2016 at 9:41 am					</a>
+									</div><!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body"><p>Here &#8220;a&#8221; coefficients represents numerator, right? In most sources b is a numerator.</p>
+</div>
+
+				<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/?replytocom=51389#respond' data-commentid="51389" data-postid="219" data-belowelement="comment-51389" data-respondelement="respond" aria-label='Reply to Eugene'>Reply</a>				</div><!-- .reply -->
+			</div><!-- #comment-##  -->
+
+				<ul class="children">
+		<li class="comment byuser comment-author-codehead bypostauthor even depth-2" id="li-comment-51812">
+		<div id="comment-51812">
+			<div class="comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/eac3fa758886f87242004fc60f9a6d40?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/eac3fa758886f87242004fc60f9a6d40?s=80&#038;d=mm&#038;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />				<cite class="fn">Nigel Redmon</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+				
+			<div class="comment-meta commentmetadata"><a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/#comment-51812">
+				January 3, 2017 at 10:41 pm					</a>
+									</div><!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body"><p>Hi Eugene—asked and answered a few times in comments on the site, but since you bring it up, I’ll put together a short article explaining the choice. Short version: In the internet age, I don’t doubt that <em>b</em>-in-the-numerator has become most common. But I’m not going to edit articles going back to 2003, so yes, <em>a</em> in the numerator here 😉</p>
+</div>
+
+				<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/?replytocom=51812#respond' data-commentid="51812" data-postid="219" data-belowelement="comment-51812" data-respondelement="respond" aria-label='Reply to Nigel Redmon'>Reply</a>				</div><!-- .reply -->
+			</div><!-- #comment-##  -->
+
+				</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1" id="li-comment-64617">
+		<div id="comment-64617">
+			<div class="comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/d2d45c33273533bf50c9e9cbedd93860?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/d2d45c33273533bf50c9e9cbedd93860?s=80&#038;d=mm&#038;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />				<cite class="fn">dino</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+				
+			<div class="comment-meta commentmetadata"><a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/#comment-64617">
+				June 17, 2018 at 10:35 am					</a>
+									</div><!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body"><p>How do you calculate the coefficients from the poles to get the frequency response? I know to use the quadratic formula to get the opposite so I naively attempted making a quadratic using the poles but couldn&#8217;t get the same result as the calculator. I&#8217;m guessing it&#8217;s something obvious I&#8217;m missing but I couldn&#8217;t find anywhere that shows it being done other than an uncommented line of code&#8230;</p>
+</div>
+
+				<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/?replytocom=64617#respond' data-commentid="64617" data-postid="219" data-belowelement="comment-64617" data-respondelement="respond" aria-label='Reply to dino'>Reply</a>				</div><!-- .reply -->
+			</div><!-- #comment-##  -->
+
+				<ul class="children">
+		<li class="comment byuser comment-author-codehead bypostauthor even depth-2" id="li-comment-64619">
+		<div id="comment-64619">
+			<div class="comment-author vcard">
+				<img alt='' src='https://secure.gravatar.com/avatar/eac3fa758886f87242004fc60f9a6d40?s=40&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/eac3fa758886f87242004fc60f9a6d40?s=80&#038;d=mm&#038;r=g 2x' class='avatar avatar-40 photo' height='40' width='40' />				<cite class="fn">Nigel Redmon</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+				
+			<div class="comment-meta commentmetadata"><a href="https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/#comment-64619">
+				June 17, 2018 at 11:14 am					</a>
+									</div><!-- .comment-meta .commentmetadata -->
+
+				<div class="comment-body"><p>On this one, I&#8217;m calculating the frequency response directly from the locations of the poles and zeros. But since I also calculated and display the coefficients, of course it could have been derived from the coefficients (as in <a href="/main/2016/12/01/evaluating-filter-frequency-response/" rel="nofollow">Evaluating filter frequency response</a>).</p>
+<p>You can look at the Javascript source with your browsers developer tools, or directly <a href="/scripts/widgets/20131028/PoleZero2.js" rel="nofollow">here</a>. The function getBiquadCoefs_polezero2 converts from pole-zero to coefficients (OK, I see I multiply and add a term I&#8217;ve already determined to be zero, but I do these things quickly.)</p>
+</div>
+
+				<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://www.earlevel.com/main/2013/10/28/pole-zero-placement-v2/?replytocom=64619#respond' data-commentid="64619" data-postid="219" data-belowelement="comment-64619" data-respondelement="respond" aria-label='Reply to Nigel Redmon'>Reply</a>				</div><!-- .reply -->
+			</div><!-- #comment-##  -->
+
+				</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+			</ol>
+
+	
+	
+
+	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/main/2013/10/28/pole-zero-placement-v2/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://www.earlevel.com/main/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" /></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /> <label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='219' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="1db742a7b0" /></p><input type="hidden" id="ak_js" name="ak_js" value="85"/><textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100" style="display: none !important;"></textarea></form>	</div><!-- #respond -->
+	
+</div><!-- #comments -->
+
+	
+			</div><!-- #content -->
+		</div><!-- #container -->
+
+
+		<div id="primary" class="widget-area" role="complementary">
+			<ul class="xoxo">
+
+<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" class="searchform" action="https://www.earlevel.com/main/">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input type="text" value="" name="s" id="s" />
+					<input type="submit" id="searchsubmit" value="Search" />
+				</div>
+			</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+											<li>
+					<a href="https://www.earlevel.com/main/2021/04/08/time-resolution-in-digital-audio/">Time resolution in digital audio</a>
+									</li>
+											<li>
+					<a href="https://www.earlevel.com/main/2020/10/29/amplitude-modulation-principles-and-interactive-widget-video/">Amplitude Modulation Principles and Interactive Widget video</a>
+									</li>
+											<li>
+					<a href="https://www.earlevel.com/main/2020/10/29/amplitude-modulation-deep-and-fast-video/">Amplitude Modulation Deep and Fast video</a>
+									</li>
+											<li>
+					<a href="https://www.earlevel.com/main/2020/10/02/am-widget/">AM widget</a>
+									</li>
+											<li>
+					<a href="https://www.earlevel.com/main/2020/01/04/further-thoughts-on-wave-table-oscillators/">Further thoughts on wave table oscillators</a>
+									</li>
+											<li>
+					<a href="https://www.earlevel.com/main/2019/04/30/waveutils-updated/">WaveUtils updated</a>
+									</li>
+											<li>
+					<a href="https://www.earlevel.com/main/2019/04/28/wavetableosc-optimized/">WaveTableOsc optimized</a>
+									</li>
+											<li>
+					<a href="https://www.earlevel.com/main/2019/04/26/how-i-write-code/">How I write code</a>
+									</li>
+					</ul>
+		</li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+				<li><a href='https://www.earlevel.com/main/2021/04/'>April 2021</a></li>
+	<li><a href='https://www.earlevel.com/main/2020/10/'>October 2020</a></li>
+	<li><a href='https://www.earlevel.com/main/2020/01/'>January 2020</a></li>
+	<li><a href='https://www.earlevel.com/main/2019/04/'>April 2019</a></li>
+	<li><a href='https://www.earlevel.com/main/2018/09/'>September 2018</a></li>
+	<li><a href='https://www.earlevel.com/main/2017/08/'>August 2017</a></li>
+	<li><a href='https://www.earlevel.com/main/2017/05/'>May 2017</a></li>
+	<li><a href='https://www.earlevel.com/main/2017/01/'>January 2017</a></li>
+	<li><a href='https://www.earlevel.com/main/2016/12/'>December 2016</a></li>
+	<li><a href='https://www.earlevel.com/main/2016/09/'>September 2016</a></li>
+	<li><a href='https://www.earlevel.com/main/2016/02/'>February 2016</a></li>
+	<li><a href='https://www.earlevel.com/main/2015/09/'>September 2015</a></li>
+	<li><a href='https://www.earlevel.com/main/2015/01/'>January 2015</a></li>
+	<li><a href='https://www.earlevel.com/main/2014/03/'>March 2014</a></li>
+	<li><a href='https://www.earlevel.com/main/2014/01/'>January 2014</a></li>
+	<li><a href='https://www.earlevel.com/main/2013/10/'>October 2013</a></li>
+	<li><a href='https://www.earlevel.com/main/2013/06/'>June 2013</a></li>
+	<li><a href='https://www.earlevel.com/main/2013/05/'>May 2013</a></li>
+	<li><a href='https://www.earlevel.com/main/2013/04/'>April 2013</a></li>
+	<li><a href='https://www.earlevel.com/main/2013/03/'>March 2013</a></li>
+	<li><a href='https://www.earlevel.com/main/2013/02/'>February 2013</a></li>
+	<li><a href='https://www.earlevel.com/main/2012/12/'>December 2012</a></li>
+	<li><a href='https://www.earlevel.com/main/2012/11/'>November 2012</a></li>
+	<li><a href='https://www.earlevel.com/main/2012/05/'>May 2012</a></li>
+	<li><a href='https://www.earlevel.com/main/2012/03/'>March 2012</a></li>
+	<li><a href='https://www.earlevel.com/main/2011/01/'>January 2011</a></li>
+	<li><a href='https://www.earlevel.com/main/2010/12/'>December 2010</a></li>
+	<li><a href='https://www.earlevel.com/main/2010/11/'>November 2010</a></li>
+	<li><a href='https://www.earlevel.com/main/2007/07/'>July 2007</a></li>
+	<li><a href='https://www.earlevel.com/main/2003/03/'>March 2003</a></li>
+	<li><a href='https://www.earlevel.com/main/2003/02/'>February 2003</a></li>
+	<li><a href='https://www.earlevel.com/main/2002/08/'>August 2002</a></li>
+	<li><a href='https://www.earlevel.com/main/1997/01/'>January 1997</a></li>
+	<li><a href='https://www.earlevel.com/main/1996/11/'>November 1996</a></li>
+	<li><a href='https://www.earlevel.com/main/1996/10/'>October 1996</a></li>
+	<li><a href='https://www.earlevel.com/main/1996/08/'>August 1996</a></li>
+	<li><a href='https://www.earlevel.com/main/1996/07/'>July 1996</a></li>
+		</ul>
+			</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+				<li class="cat-item cat-item-4"><a href="https://www.earlevel.com/main/category/digital-audio/">Digital Audio</a> (61)
+<ul class='children'>
+	<li class="cat-item cat-item-11"><a href="https://www.earlevel.com/main/category/digital-audio/aliasing/">Aliasing</a> (9)
+</li>
+	<li class="cat-item cat-item-14"><a href="https://www.earlevel.com/main/category/digital-audio/convolution/">Convolution</a> (3)
+</li>
+	<li class="cat-item cat-item-5"><a href="https://www.earlevel.com/main/category/digital-audio/dither-digital-audio/">Dither</a> (7)
+</li>
+	<li class="cat-item cat-item-8"><a href="https://www.earlevel.com/main/category/digital-audio/filters/">Filters</a> (23)
+	<ul class='children'>
+	<li class="cat-item cat-item-22"><a href="https://www.earlevel.com/main/category/digital-audio/filters/dc-blocker/">DC Blocker</a> (1)
+</li>
+	<li class="cat-item cat-item-19"><a href="https://www.earlevel.com/main/category/digital-audio/filters/fir-filters/">FIR Filters</a> (7)
+</li>
+	<li class="cat-item cat-item-9"><a href="https://www.earlevel.com/main/category/digital-audio/filters/iir-filters/">IIR Filters</a> (17)
+		<ul class='children'>
+	<li class="cat-item cat-item-21"><a href="https://www.earlevel.com/main/category/digital-audio/filters/iir-filters/biquads/">Biquads</a> (11)
+</li>
+		</ul>
+</li>
+	</ul>
+</li>
+	<li class="cat-item cat-item-16"><a href="https://www.earlevel.com/main/category/digital-audio/fourier/">Fourier</a> (3)
+	<ul class='children'>
+	<li class="cat-item cat-item-17"><a href="https://www.earlevel.com/main/category/digital-audio/fourier/fft/">FFT</a> (3)
+</li>
+	</ul>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://www.earlevel.com/main/category/digital-audio/impulse-response/">Impulse Response</a> (5)
+</li>
+	<li class="cat-item cat-item-10"><a href="https://www.earlevel.com/main/category/digital-audio/jitter/">Jitter</a> (2)
+</li>
+	<li class="cat-item cat-item-20"><a href="https://www.earlevel.com/main/category/digital-audio/oscillators/">Oscillators</a> (12)
+	<ul class='children'>
+	<li class="cat-item cat-item-24"><a href="https://www.earlevel.com/main/category/digital-audio/oscillators/wavetable-oscillators/">Wavetable Oscillators</a> (12)
+</li>
+	</ul>
+</li>
+	<li class="cat-item cat-item-12"><a href="https://www.earlevel.com/main/category/digital-audio/phase/">Phase</a> (2)
+</li>
+	<li class="cat-item cat-item-13"><a href="https://www.earlevel.com/main/category/digital-audio/reverb/">Reverb</a> (2)
+</li>
+	<li class="cat-item cat-item-6"><a href="https://www.earlevel.com/main/category/digital-audio/sample-rate-conversion/">Sample Rate Conversion</a> (10)
+</li>
+	<li class="cat-item cat-item-7"><a href="https://www.earlevel.com/main/category/digital-audio/sampling-theory/">Sampling Theory</a> (6)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-33"><a href="https://www.earlevel.com/main/category/effects/">Effects</a> (1)
+<ul class='children'>
+	<li class="cat-item cat-item-35"><a href="https://www.earlevel.com/main/category/effects/guitar-amp-simulation/">Guitar Amp Simulation</a> (1)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-25"><a href="https://www.earlevel.com/main/category/envelope-generators/">Envelope Generators</a> (5)
+</li>
+	<li class="cat-item cat-item-38"><a href="https://www.earlevel.com/main/category/math/">Math</a> (5)
+<ul class='children'>
+	<li class="cat-item cat-item-39"><a href="https://www.earlevel.com/main/category/math/amplitude-modulation/">Amplitude Modulation</a> (3)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://www.earlevel.com/main/category/midi/">MIDI</a> (2)
+</li>
+	<li class="cat-item cat-item-26"><a href="https://www.earlevel.com/main/category/source-code/">Source Code</a> (10)
+</li>
+	<li class="cat-item cat-item-23"><a href="https://www.earlevel.com/main/category/synthesizers/">Synthesizers</a> (9)
+</li>
+	<li class="cat-item cat-item-1"><a href="https://www.earlevel.com/main/category/uncategorized/">Uncategorized</a> (3)
+</li>
+	<li class="cat-item cat-item-29"><a href="https://www.earlevel.com/main/category/video/">Video</a> (6)
+</li>
+	<li class="cat-item cat-item-30"><a href="https://www.earlevel.com/main/category/widgets/">Widgets</a> (13)
+</li>
+		</ul>
+			</li>			</ul>
+		</div><!-- #primary .widget-area -->
+
+	</div><!-- #main -->
+
+	<div id="footer" role="contentinfo">
+		<div id="colophon">
+
+
+
+			<div id="site-info">
+				<a href="https://www.earlevel.com/main/" title="EarLevel Engineering" rel="home">
+					EarLevel Engineering				</a>
+			</div><!-- #site-info -->
+
+			<div id="site-generator">
+							</div><!-- #site-generator -->
+
+		</div><!-- #colophon -->
+	</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+<script type='text/javascript' src='https://www.earlevel.com/main/wp-includes/js/comment-reply.min.js?ver=5.3.8'></script>
+<script type='text/javascript' src='https://www.earlevel.com/main/wp-includes/js/wp-embed.min.js?ver=5.3.8'></script>
+<script async="async" type='text/javascript' src='https://www.earlevel.com/main/wp-content/plugins/akismet/_inc/form.js?ver=4.1.9'></script>
+</body>
+</html>
