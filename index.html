@@ -8,6 +8,11 @@
     <div id="poles"></div>
     <button onclick="addNewPole()">New Pole</button>
     <button onclick="addNewZero()">New Zero</button>
+    <button onclick="clearZeros()">clear zeros</button>
+    <button onclick="clearPoles()">clear poles</button>
+    <button onclick="clearAllPoints()">clear All</button><br>
+    <input type="checkbox" id="conjugate" onclick="setZplane(poles, zeros)">
+    <label> add Conjugates</label>
 </body>
 
 
@@ -23,6 +28,7 @@ var offsetY = canvasOffset.top;
 var scrollX = $canvas.scrollLeft();
 var scrollY = $canvas.scrollTop();
 
+const conjugateTag = document.getElementById('conjugate');
 
 // variables to save last mouse position
 // used to see how far the user dragged the mouse
@@ -56,73 +62,37 @@ function addNewZero() {
     setZplane(poles, zeros);
 }
 
-// function updateZplane() {
-//     let p = [];
-//     let z = [];
-//     // for(let i = 1; i < zeros.length; i++){
-//     //     p.append(document.getElementById("pole" + i + "_polezero2").value / 200);
-//     // }
-//     // for(let i = 1; i < zeros.length; i++){
-//     //     z.append(document.getElementById("zero" + i + "_polezero2").value / 200);
-//     // }
-// 	// var p1 = document.getElementById("pole1_polezero2").value / 200;
-// 	// var p2 = document.getElementById("pole2_polezero2").value / 200;
-// 	// var z1 = document.getElementById("zero1_polezero2").value / 200;
-// 	// var z2 = document.getElementById("zero2_polezero2").value / 200;
-	
-// 	// var poles = [];
-// 	// var zeros = [];
-// 	// var polesPaired = document.getElementById("polePair_polezero2").checked;
-// 	// var zerosPaired = document.getElementById("zeroPair_polezero2").checked;
-
-// 	var x1, y1;
-// 	if (polesPaired) {
-// 		// complex conjugate poles and zeros
-// 		x1 = Math.cos(p2 * Math.PI) * p1;
-// 		if (Math.abs(x1) < 1E-14)
-// 			x1 = 0;
-// 		y1 = Math.sin(p2 * Math.PI) * p1;
-// 		if (Math.abs(y1) < 1E-14)
-// 			y1 = 0;
-// 		poles.push([x1, y1]);
-// 		poles.push([x1, -y1]);
-// 	}
-// 	else {
-// 		poles.push([p1 * 2 - 1, 0]);
-// 		poles.push([p2 * 2 - 1, 0]);
-// 	}
-	
-// 	if (zerosPaired) {
-// 		x1 = Math.cos(z2 * Math.PI) * z1;
-// 		if (Math.abs(x1) < 1E-14)
-// 			x1 = 0;
-// 		y1 = Math.sin(z2 * Math.PI) * z1;
-// 		if (Math.abs(y1) < 1E-14)
-// 			y1 = 0;
-// 		zeros.push([x1, y1]);
-// 		zeros.push([x1, -y1]);
-// 	}
-// 	else {
-// 		zeros.push([z1 * 2 - 1, 0]);
-// 		zeros.push([z2 * 2 - 1, 0]);
-// 	}
-
-// 	setZplane(poles, zeros);
-// }
+function clearAllPoints() {
+    poles = [];
+    zeros = [];
+    polesNum = 0;
+    zerosNum = 0;
+    setZplane(poles, zeros);
+}
+function clearZeros() {
+    zeros = [];
+    zerosNum = 0;
+    setZplane(poles, zeros);
+}
+function clearPoles() {
+    poles = [];
+    polesNum = 0;
+    setZplane(poles, zeros);
+}
 
 // this var will hold the index of the selected text
 var selectedPoint = -1;
 
 // test if x,y is inside the bounding box of texts[textIndex]
 function pointHittest(x, y, textIndex) {
-    console.log([x, y]);
-    console.log("poles.length is " + poles.length);
+    // console.log([x, y]);
+    // console.log("poles.length is " + poles.length);
     if(textIndex >= polesNum){
-        console.log("check some zero!");
+        // console.log("check some zero!");
         return (x >= zeros[textIndex - polesNum][0] - 0.05 && x <= zeros[textIndex - polesNum][0] + 0.05 && y >= zeros[textIndex - polesNum][1] - 0.05 && y <= zeros[textIndex - polesNum][1] + 0.05);
     }
     if(textIndex < polesNum){
-        console.log("check some pole!");
+        // console.log("check some pole!");
         return (x >= poles[textIndex][0] - 0.05 && x <= poles[textIndex][0] + 0.05 && y >= poles[textIndex][1] - 0.05 && y <= poles[textIndex][1] + 0.05);
     }
 }
@@ -135,20 +105,20 @@ function handleMouseDown(e) {
     e.preventDefault();
     startX = parseInt(e.clientX - offsetX);
     startY = parseInt(e.clientY - offsetY);
-    console.log("you selected point [" + startX + ", " + startY + "]");
-    console.log("which is point [" + (startX-150)/100 + ", " + -(startY-150)/100 + "]");
+    // console.log("you selected point [" + startX + ", " + startY + "]");
+    // console.log("which is point [" + (startX-150)/100 + ", " + -(startY-150)/100 + "]");
 
-    console.log("poles number is " + poles.length);
-    console.log("zeros number is " + zeros.length);
+    // console.log("poles number is " + poles.length);
+    // console.log("zeros number is " + zeros.length);
     totalLength = polesNum + zerosNum;
     // Put your mousedown stuff here
     for (var i = 0; i < totalLength; i++) {
         if (pointHittest((startX-150)/100, -(startY-150)/100, i)) {
             selectedPoint = i;
             if(i >= polesNum){
-                console.log("selected zero" + (i - polesNum));
+                // console.log("selected zero" + (i - polesNum));
             }else if(i < polesNum){
-                console.log("selected pole" + (i));
+                // console.log("selected pole" + (i));
             }
         }
     }
@@ -162,7 +132,7 @@ function handleMouseMove(e) {
     if (selectedPoint < 0) {
         return;
     }
-    console.log("Mouse is Moving!...");
+    // console.log("Mouse is Moving!...");
     e.preventDefault();
     mouseX = parseInt(e.clientX - offsetX);
     mouseY = parseInt(e.clientY - offsetY);
@@ -170,13 +140,13 @@ function handleMouseMove(e) {
     // Put your mousemove stuff here
     var dx = (mouseX - startX)/100;
     var dy = -(mouseY - startY)/100;
-    console.log("MouseXY -> [" + mouseX + ", " + mouseY + "]");
-    console.log("MouseXY -> [" + startX + ", " + startY + "]");
+    // console.log("MouseXY -> [" + mouseX + ", " + mouseY + "]");
+    // console.log("MouseXY -> [" + startX + ", " + startY + "]");
     startX = mouseX;
     startY = mouseY;
-    console.log("moved to point [" + startX + ", " + startY + "]");
-    console.log("which is point [" + (startX-150)/100 + ", " + -(startY-150)/100 + "]");  
-    console.log("moved by [" + dx + ", " + dy + "]");  
+    // console.log("moved to point [" + startX + ", " + startY + "]");
+    // console.log("which is point [" + (startX-150)/100 + ", " + -(startY-150)/100 + "]");  
+    // console.log("moved by [" + dx + ", " + dy + "]");  
 
     if(selectedPoint >= poles.length){
         zeros[selectedPoint - poles.length][0] += dx;
@@ -201,6 +171,34 @@ function handleMouseOut(e) {
     selectedPoint = -1;
 }
 
+// clicked pole or zero -> delete it
+function handleMouseClick(e) {
+    // e.preventDefault();
+    startX = parseInt(e.clientX - offsetX);
+    startY = parseInt(e.clientY - offsetY);
+    console.log("you selected point [" + startX + ", " + startY + "]");
+    // console.log("which is point [" + (startX-150)/100 + ", " + -(startY-150)/100 + "]");
+
+    // console.log("poles number is " + poles.length);
+    // console.log("zeros number is " + zeros.length);
+    totalLength = polesNum + zerosNum;
+    // Put your mousedown stuff here
+    for (var i = 0; i < totalLength; i++) {
+        if (pointHittest((startX-150)/100, -(startY-150)/100, i)) {
+            if(i >= polesNum){
+                zeros.splice(i - polesNum, 1);
+                zerosNum = zerosNum -1;
+                // console.log("selected zero" + (i - polesNum));
+            }else if(i < polesNum){
+                poles.splice(i, 1);
+                polesNum = polesNum -1;
+                // console.log("selected pole" + (i));
+            }
+        }
+    }
+    setZplane(poles, zeros);
+}
+
 // listen for mouse events
 $("#zplane_polezero2").mousedown(function (e) {
     handleMouseDown(e);
@@ -214,7 +212,9 @@ $("#zplane_polezero2").mouseup(function (e) {
 $("#zplane_polezero2").mouseout(function (e) {
     handleMouseOut(e);
 });
-
+$("#zplane_polezero2").dblclick(function (e) {
+    handleMouseClick(e);
+});
 
 function setZplane(poles, zeros) {
 
@@ -258,23 +258,40 @@ function setZplane(poles, zeros) {
 	ctx.strokeStyle="blue";
 	var idx;
 	for (idx = 0; idx < poles.length; idx++) {
-		var x = radius + Math.round(radius * poles[idx][0]);
-		var y = radius - Math.round(radius * poles[idx][1]);
+		let x = radius + Math.round(radius * poles[idx][0]);
+		let y = radius - Math.round(radius * poles[idx][1]);
 		ctx.beginPath();
 		ctx.moveTo(x - pSize + pad, y - pSize + pad);
 		ctx.lineTo(x + pSize + pad, y + pSize + pad);
 		ctx.moveTo(x - pSize + pad, y + pSize + pad);
 		ctx.lineTo(x + pSize + pad, y - pSize + pad);
 		ctx.stroke();
+        if(conjugateTag.checked){
+            let x = radius + Math.round(radius * poles[idx][0]);
+            let y = radius + Math.round(radius * poles[idx][1]);
+            ctx.beginPath();
+            ctx.moveTo(x - pSize + pad, y - pSize + pad);
+            ctx.lineTo(x + pSize + pad, y + pSize + pad);
+            ctx.moveTo(x - pSize + pad, y + pSize + pad);
+            ctx.lineTo(x + pSize + pad, y - pSize + pad);
+            ctx.stroke();
+        }
 	}
 	
 	// zeros
 	for (idx = 0; idx < zeros.length; idx++) {
-		var x = radius + Math.round(radius * zeros[idx][0]);
-		var y = radius - Math.round(radius * zeros[idx][1]);
+		let x = radius + Math.round(radius * zeros[idx][0]);
+		let y = radius - Math.round(radius * zeros[idx][1]);
 		ctx.beginPath();
 		ctx.arc(x + pad, y + pad, zSize, 0, 2*Math.PI);
 		ctx.stroke();
+        if(conjugateTag.checked){
+            let x = radius + Math.round(radius * zeros[idx][0]);
+            let y = radius + Math.round(radius * zeros[idx][1]);
+            ctx.beginPath();
+            ctx.arc(x + pad, y + pad, zSize, 0, 2*Math.PI);
+            ctx.stroke();
+        }
 	}
 }
 
@@ -336,7 +353,6 @@ function showZplane(poles, zeros) {
 }
 
 setZplane(poles, zeros);
-addNewPole([0, 0]);
 
 
 </script>
