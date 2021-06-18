@@ -13,6 +13,10 @@
     <button onclick="clearAllPoints()">clear All</button><br>
     <input type="checkbox" id="conjugate" onclick="setZplane(poles, zeros)">
     <label> add Conjugates</label>
+    <div align="right">
+        <canvas id="mag_response" width=600 height=300></canvas>
+        <canvas id="phase_response" width=600 height=300></canvas>
+    </div>
 </body>
 
 
@@ -80,7 +84,20 @@ function clearPoles() {
     setZplane(poles, zeros);
 }
 
-// this var will hold the index of the selected text
+// variables for mag and phase responses
+var Z = new Array(100);
+var freqAxis = new Array(100);
+
+for(let i = 0; i < 100; i++){
+    Z[i] = Math.complex(Math.cos(Math.PI * (i/100)), Math.sin(Math.PI * (i/100)));
+    freqAxis[i] = Math.PI * (i/100);
+}
+
+var magResponse = new Array;
+var phaseResponse = new Array;
+
+
+// this var will hold the index of the selected point in zplane
 var selectedPoint = -1;
 
 // test if x,y is inside the bounding box of texts[textIndex]
@@ -293,6 +310,7 @@ function setZplane(poles, zeros) {
             ctx.stroke();
         }
 	}
+    drawResponses();
 }
 
 function showZplane(poles, zeros) {
@@ -350,7 +368,50 @@ function showZplane(poles, zeros) {
         ctx.arc(x + pad, y + pad, zSize, 0, 2*Math.PI);
         ctx.stroke();
     }
+    drawResponses();
 }
+
+function drawResponses() {
+    for(let i = 0; i < 100; i++){
+        let magPoint = Math.complex(0,0);
+        let phasePoint = Math.complex(0,0);
+        for(let j = 0; j < zeros.length; j++){
+            magPoint *= Math.abs(Math.subtract(Z[i], Math.complex(zeros[j][0], zeros[j][1])))
+            phasePoint *= Math.atan(Math.subtract(Z[i], Math.complex(zeros[j][0], zeros[j][1])))
+        }
+        for(let j = 0; j < poles.length; j++){
+            magPoint /= Math.abs(Math.subtract(Z[i], Math.complex(poles[j][0], poles[j][1])))
+            phasePoint /= Math.atan(Math.subtract(Z[i], Math.complex(poles[j][0], poles[j][1])))
+        }
+        magResponse.push(magPoint);
+        phaseResponse.push(phasePoint);
+    }
+
+    // normalize
+    var maxMag = Math.max(...magResponse);
+    var maxPhase = Math.max(...phaseResponse);
+    for(let i = 0; i < magResponse; i++) {
+        magResponse[i] /= maxMag;
+        phaseResponse[i] /= maxPhase;
+    }
+
+    let magData = [];
+    let phaseData = [];
+
+    for(let i = 0; i < 100; i++){
+        magData.push([freqAxis[i], magResponse[i]]);
+        phaseData.push([freqAxis[i], phaseResponse[i]]);
+    }
+
+    // plot mag_response
+	var container = document.getElementById('mag_response');
+    graph = Flotr.draw(container, [ magData ], { yaxis: { max : 0, min : -120 } });
+    
+    // plot phase_response
+    var container = document.getElementById('phase_response');
+    graph = Flotr.draw(container, [ phaseData ], { yaxis: { max : 60, min : -60 } });
+}
+
 
 setZplane(poles, zeros);
 

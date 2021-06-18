@@ -292,29 +292,29 @@ function setZplane(poles, zeros) {
 	else
 		graph = Flotr.draw(container, [ mag ], { yaxis: { max : 0, min : -120 }, xaxis: { tickFormatter: nullTickFormatter_polezero2 } });
 
-	// show coefficients
-	var coefsList = "poles at " + poles[0][0];
-	var temp = poles[0][1];
-	if (temp != 0)
-		coefsList += " \xB1 " + Math.abs(temp) + "i\n";
-	else
-		coefsList += ", " + poles[1][0] + "\n";
+	// // show coefficients
+	// var coefsList = "poles at " + poles[0][0];
+	// var temp = poles[0][1];
+	// if (temp != 0)
+	// 	coefsList += " \xB1 " + Math.abs(temp) + "i\n";
+	// else
+	// 	coefsList += ", " + poles[1][0] + "\n";
 
-	coefsList += "zeros at " + zeros[0][0];
-	var temp = zeros[0][1];
-	if (temp != 0)
-		coefsList += " \xB1 " + Math.abs(temp) + "i\n";
-	else
-		coefsList += ", " + zeros[1][0] + "\n";
+	// coefsList += "zeros at " + zeros[0][0];
+	// var temp = zeros[0][1];
+	// if (temp != 0)
+	// 	coefsList += " \xB1 " + Math.abs(temp) + "i\n";
+	// else
+	// 	coefsList += ", " + zeros[1][0] + "\n";
 	
-	var coefs = getBiquadCoefs_polezero2(poles, zeros, magMax);
-	coefsList += "\na0 = " + coefs[0] + "\n";	
-	coefsList += "a1 = " + coefs[1] + "\n";
-	coefsList += "a2 = " + coefs[2] + "\n";
-	coefsList += "b1 = " + coefs[4] + "\n";
-	coefsList += "b2 = " + coefs[5];
+	// var coefs = getBiquadCoefs_polezero2(poles, zeros, magMax);
+	// coefsList += "\na0 = " + coefs[0] + "\n";	
+	// coefsList += "a1 = " + coefs[1] + "\n";
+	// coefsList += "a2 = " + coefs[2] + "\n";
+	// coefsList += "b1 = " + coefs[4] + "\n";
+	// coefsList += "b2 = " + coefs[5];
 
-    document.getElementById("coefsList_polezero2").value = coefsList;
+    // document.getElementById("coefsList_polezero2").value = coefsList;
 }
 
 function getBiquadCoefs_polezero2(poles, zeros, gainMax) {
