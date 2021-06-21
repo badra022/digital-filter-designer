@@ -1,27 +1,56 @@
-<!DOCTYPE html>
-<style>
-    #zplane_polezero2{border:2px solid black;}
-</style>
-<body>
-    <canvas id="zplane_polezero2" width=300 height=300></canvas>
-    <div id="zeros"></div>
-    <div id="poles"></div>
-    <button onclick="addNewPole()">New Pole</button>
-    <button onclick="addNewZero()">New Zero</button>
-    <button onclick="clearZeros()">clear zeros</button>
-    <button onclick="clearPoles()">clear poles</button>
-    <button onclick="clearAllPoints()">clear All</button><br>
-    <input type="checkbox" id="conjugate" onclick="setZplane(poles, zeros)">
-    <label> add Conjugates</label>
-    <div align="right">
-        <canvas id="mag_response" width=600 height=300></canvas>
-        <canvas id="phase_response" width=600 height=300></canvas>
-    </div>
-</body>
-
-
-
+<link rel="stylesheet" href="https://cdn.lineicons.com/2.0/LineIcons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="flotr2.min.js"></script>
+<script src="math.js" type="text/javascript"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@300;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="style.css">
+<div class="container">
+  <div class="header">
+    <div class="header-logo">
+      <span class="site-title">All Pass Library</span>
+    </div>
+    <div class="header-search">
+      <button class="button-menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 385 385">
+          <path d="M12 120.3h361a12 12 0 000-24H12a12 12 0 000 24zM373 180.5H12a12 12 0 000 24h361a12 12 0 000-24zM373 264.7H132.2a12 12 0 000 24H373a12 12 0 000-24z" />
+        </svg></button>
+      <input type="search" placeholder="Search Documentation..." />
+    </div>
+  </div>
+  <div class="main">
+    <div class="sidebar">
+      <ul>
+        <li><a href="#"><i class="lni lni-text-format"></i><span>a = 2 + 2j</span></a></li>
+        <li><a href="#"><i class="lni lni-text-format"></i><span>a = 2 - 2j</span></a></li>
+        <li><a href="#"><i class="lni lni-text-format"></i><span>a = 1 + 2j</span></a></li>
+        <li><a href="#"><i class="lni lni-text-format"></i><span>a = 2 + 1j</span></a></li>
+      </ul>
+    </div>
+    <div class="page-content">
+        <canvas id="zplane_polezero2" width=300 height=300></canvas>
+        <div id="zeros"></div>
+        <div id="poles"></div>
+        <button onclick="addNewPole()" class="btn btn-primary">New Pole</button>
+        <button onclick="addNewZero()" class="btn btn-primary">New Zero</button>
+        <button onclick="clearZeros()" class="btn btn-primary">clear zeros</button>
+        <button onclick="clearPoles()" class="btn btn-primary">clear poles</button>
+        <button onclick="clearAllPoints()" class="btn btn-primary">clear All</button><br>
+        <input type="checkbox" id="conjugate" onclick="setZplane(poles, zeros)">
+        <label> add Conjugates</label>
+        <input type="checkbox" id="allPassEffect" onclick="setZplane(poles, zeros)">
+        <label> with all Pass filters</label>
+        <div id="design_responses">
+            <div id="mag_response" style="width:500px;height:200px;"></div>
+            <div id="phase_response" style="width:500px;height:200px;"></div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script src="layout.js" type="text/javascript"></script>
 <script>
 
 // variables used to get mouse position on the canvas
@@ -42,8 +71,10 @@ var startY;
 
 var zeros = new Array;
 var poles = new Array;
+var allPass = new Array;
 var zerosNum = 0;
 var polesNum = 0;
+var allPassNum = 0;
 
 function addNewPole() {
     // console.log("I'm here!");
@@ -64,6 +95,16 @@ function addNewZero() {
     zeros.push([0, 0]);
     zerosNum = zerosNum + 1;
     setZplane(poles, zeros);
+}
+
+function addNewAllPass(a) {
+    allPass.push(math.complex(a));
+}
+
+function removeAllPassFilter(a) {
+    allPass = allPass.filter(function(value, index, arr) {
+        return !math.equal(value, math.complex(a));
+    });
 }
 
 function clearAllPoints() {
@@ -89,13 +130,9 @@ var Z = new Array(100);
 var freqAxis = new Array(100);
 
 for(let i = 0; i < 100; i++){
-    Z[i] = Math.complex(Math.cos(Math.PI * (i/100)), Math.sin(Math.PI * (i/100)));
+    Z[i] = math.complex(math.cos(math.PI * (i/100)), math.sin(math.PI * (i/100)));
     freqAxis[i] = Math.PI * (i/100);
 }
-
-var magResponse = new Array;
-var phaseResponse = new Array;
-
 
 // this var will hold the index of the selected point in zplane
 var selectedPoint = -1;
@@ -122,15 +159,15 @@ function handleMouseDown(e) {
     e.preventDefault();
     startX = parseInt(e.clientX - offsetX);
     startY = parseInt(e.clientY - offsetY);
-    // console.log("you selected point [" + startX + ", " + startY + "]");
-    // console.log("which is point [" + (startX-150)/100 + ", " + -(startY-150)/100 + "]");
+    console.log("you selected point [" + startX + ", " + startY + "]");
+    console.log("which is point [" + (startX+70)/100 + ", " + -(startY-150)/100 + "]");
 
     // console.log("poles number is " + poles.length);
     // console.log("zeros number is " + zeros.length);
     totalLength = polesNum + zerosNum;
     // Put your mousedown stuff here
     for (var i = 0; i < totalLength; i++) {
-        if (pointHittest((startX-150)/100, -(startY-150)/100, i)) {
+        if (pointHittest((startX+70)/100, -(startY-150)/100, i)) {
             selectedPoint = i;
             if(i >= polesNum){
                 // console.log("selected zero" + (i - polesNum));
@@ -162,7 +199,7 @@ function handleMouseMove(e) {
     startX = mouseX;
     startY = mouseY;
     // console.log("moved to point [" + startX + ", " + startY + "]");
-    // console.log("which is point [" + (startX-150)/100 + ", " + -(startY-150)/100 + "]");  
+    // console.log("which is point [" + (startX+70)/100 + ", " + -(startY-150)/100 + "]");  
     // console.log("moved by [" + dx + ", " + dy + "]");  
 
     if(selectedPoint >= poles.length){
@@ -193,15 +230,15 @@ function handleMouseClick(e) {
     // e.preventDefault();
     startX = parseInt(e.clientX - offsetX);
     startY = parseInt(e.clientY - offsetY);
-    console.log("you selected point [" + startX + ", " + startY + "]");
-    // console.log("which is point [" + (startX-150)/100 + ", " + -(startY-150)/100 + "]");
+    // console.log("you selected point [" + startX + ", " + startY + "]");
+    // console.log("which is point [" + (startX+70)/100 + ", " + -(startY-150)/100 + "]");
 
     // console.log("poles number is " + poles.length);
     // console.log("zeros number is " + zeros.length);
     totalLength = polesNum + zerosNum;
     // Put your mousedown stuff here
     for (var i = 0; i < totalLength; i++) {
-        if (pointHittest((startX-150)/100, -(startY-150)/100, i)) {
+        if (pointHittest((startX+70)/100, -(startY-150)/100, i)) {
             if(i >= polesNum){
                 zeros.splice(i - polesNum, 1);
                 zerosNum = zerosNum -1;
@@ -310,15 +347,41 @@ function setZplane(poles, zeros) {
             ctx.stroke();
         }
 	}
+
+    if(allPassEffect.checked){
+        // allpass poles
+        for (idx = 0; idx < allPass.length; idx++) {
+            let x = radius + Math.round(radius * allPass[idx].re);
+            let y = radius - Math.round(radius * allPass[idx].im);
+            ctx.beginPath();
+            ctx.moveTo(x - pSize + pad, y - pSize + pad);
+            ctx.lineTo(x + pSize + pad, y + pSize + pad);
+            ctx.moveTo(x - pSize + pad, y + pSize + pad);
+            ctx.lineTo(x + pSize + pad, y - pSize + pad);
+            ctx.stroke();
+        }
+
+        // allpass zeros
+        for (idx = 0; idx < allPass.length; idx++) {
+            let tempVar = math.divide(1, math.conj(allPass[idx]));
+            let x = radius + Math.round(radius * tempVar.re);
+            let y = radius - Math.round(radius * tempVar.im);
+            ctx.beginPath();
+            ctx.arc(x + pad, y + pad, zSize, 0, 2*Math.PI);
+            ctx.stroke();
+        }
+    }
     drawResponses();
 }
 
-function showZplane(poles, zeros) {
+function showZplaneForAllPass(a) {
+    let zero = math.divide(1, math.conj(math.complex(a)));
+    let pole = math.complex(a);
     var radius = 100;	// radius of unit circle
     var pSize = 4;		// size of pole and zero graphic
     var zSize = 4;
 
-    var c=document.getElementById("all_pass_filter");
+    var c=document.getElementById("allpass_zplane_polezero2");
     var ctx=c.getContext("2d");
 
     ctx.clearRect(0, 0, c.width, c.height);
@@ -346,42 +409,99 @@ function showZplane(poles, zeros) {
     ctx.fillText("Re", radius+radius+pad+2, radius+pad-2);
     ctx.stroke(); // Draw it
 
-    // poles
+    // pole
     ctx.strokeStyle="blue";
-    var idx;
-    for (idx = 0; idx < poles.length; idx++) {
-        var x = radius + Math.round(radius * poles[idx][0]);
-        var y = radius - Math.round(radius * poles[idx][1]);
-        ctx.beginPath();
-        ctx.moveTo(x - pSize + pad, y - pSize + pad);
-        ctx.lineTo(x + pSize + pad, y + pSize + pad);
-        ctx.moveTo(x - pSize + pad, y + pSize + pad);
-        ctx.lineTo(x + pSize + pad, y - pSize + pad);
-        ctx.stroke();
+    let x = radius + Math.round(radius * pole.re);
+    let y = radius - Math.round(radius * pole.im);
+    ctx.beginPath();
+    ctx.moveTo(x - pSize + pad, y - pSize + pad);
+    ctx.lineTo(x + pSize + pad, y + pSize + pad);
+    ctx.moveTo(x - pSize + pad, y + pSize + pad);
+    ctx.lineTo(x + pSize + pad, y - pSize + pad);
+    ctx.stroke();
+
+    // zero
+    x = radius + Math.round(radius * zero.re);
+    y = radius - Math.round(radius * zero.im);
+    ctx.beginPath();
+    ctx.arc(x + pad, y + pad, zSize, 0, 2*Math.PI);
+    ctx.stroke();
+
+    drawResponseOfAllPass(math.complex(a));
+}
+
+function drawResponseOfAllPass() {
+    let zero = math.divide(1, math.conj(a));
+    let pole = a;
+    let magResponse = [];
+    let phaseResponse = [];
+    for(let i = 0; i < 100; i++){
+        let magPoint = math.complex(1,0);
+        let phasePoint = math.complex(1,0);
+        let temp = math.subtract(Z[i], math.complex(zero.re, zero.im));
+        magPoint *= temp.abs();
+        phasePoint *= temp.arg();
+        temp = math.subtract(Z[i], math.complex(pole.re, pole.im));
+        magPoint /= temp.abs();
+        phasePoint /= temp.arg();
+        
+        magResponse.push(magPoint);
+        phaseResponse.push(phasePoint);
+        }
+
+    // normalize
+    var maxMag = Math.max(...magResponse);
+    var maxPhase = Math.max(...phaseResponse);
+    for(let i = 0; i < magResponse; i++) {
+        magResponse[i] /= maxMag;
+        phaseResponse[i] /= maxPhase;
     }
 
-    // zeros
-    for (idx = 0; idx < zeros.length; idx++) {
-        var x = radius + Math.round(radius * zeros[idx][0]);
-        var y = radius - Math.round(radius * zeros[idx][1]);
-        ctx.beginPath();
-        ctx.arc(x + pad, y + pad, zSize, 0, 2*Math.PI);
-        ctx.stroke();
+    let magData = [];
+    let phaseData = [];
+
+    for(let i = 0; i < 100; i++){
+        magData.push([freqAxis[i], magResponse[i]]);
+        // console.log(magResponse[i]);
+        phaseData.push([freqAxis[i], phaseResponse[i]]);
+        // console.log(phaseResponse[i]);
     }
-    drawResponses();
+
+    // plot mag_response
+	var container = document.getElementById('allpass_mag_response');
+    graph = Flotr.draw(container, [ magData ], { yaxis: { max : 10, min : 0 } });
+    
+    // plot phase_response
+    var container = document.getElementById('allpass_phase_response');
+    graph = Flotr.draw(container, [ phaseData ], { yaxis: { max : 120, min : -120 } });
 }
 
 function drawResponses() {
+    let magResponse = [];
+    let phaseResponse = [];
     for(let i = 0; i < 100; i++){
-        let magPoint = Math.complex(0,0);
-        let phasePoint = Math.complex(0,0);
+        let magPoint = math.complex(1,0);
+        let phasePoint = math.complex(1,0);
         for(let j = 0; j < zeros.length; j++){
-            magPoint *= Math.abs(Math.subtract(Z[i], Math.complex(zeros[j][0], zeros[j][1])))
-            phasePoint *= Math.atan(Math.subtract(Z[i], Math.complex(zeros[j][0], zeros[j][1])))
+            let temp = math.subtract(Z[i], math.complex(zeros[j][0], zeros[j][1]));
+            magPoint *= temp.abs();
+            phasePoint *= temp.arg();
         }
         for(let j = 0; j < poles.length; j++){
-            magPoint /= Math.abs(Math.subtract(Z[i], Math.complex(poles[j][0], poles[j][1])))
-            phasePoint /= Math.atan(Math.subtract(Z[i], Math.complex(poles[j][0], poles[j][1])))
+            let temp = math.subtract(Z[i], math.complex(poles[j][0], poles[j][1]));
+            magPoint /= temp.abs();
+            phasePoint /= temp.arg();
+        }
+        if(allPassEffect.checked){
+            for(let j = 0; j < allPass.length; j++)
+            {
+                let temp = math.subtract(Z[i], math.divide(1, math.conj(allPass[j])));
+                magPoint *= temp.abs();
+                phasePoint *= temp.arg();
+                temp = math.subtract(Z[i], allPass[j]);
+                magPoint /= temp.abs();
+                phasePoint /= temp.arg();
+            }
         }
         magResponse.push(magPoint);
         phaseResponse.push(phasePoint);
@@ -400,16 +520,18 @@ function drawResponses() {
 
     for(let i = 0; i < 100; i++){
         magData.push([freqAxis[i], magResponse[i]]);
+        // console.log(magResponse[i]);
         phaseData.push([freqAxis[i], phaseResponse[i]]);
+        // console.log(phaseResponse[i]);
     }
 
     // plot mag_response
 	var container = document.getElementById('mag_response');
-    graph = Flotr.draw(container, [ magData ], { yaxis: { max : 0, min : -120 } });
+    graph = Flotr.draw(container, [ magData ], { yaxis: { max : 10, min : 0 } });
     
     // plot phase_response
     var container = document.getElementById('phase_response');
-    graph = Flotr.draw(container, [ phaseData ], { yaxis: { max : 60, min : -60 } });
+    graph = Flotr.draw(container, [ phaseData ], { yaxis: { max : 120, min : -120 } });
 }
 
 
