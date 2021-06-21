@@ -23,7 +23,7 @@
   <div class="main">
     <div class="sidebar">
       <ul id="allpass_lib">
-        <li><label>a = </label><input type="text" id="NewAllPassValue"></li>
+        <li><label>a = </label><input type="text" id="NewAllPassValue"></li><button class="form-control" onclick="addNew()" class="btn btn-primary">Add</button>
         <li><a href="#" onclick="showZplaneForAllPass('2 + 2i')" ondblclick="addNewAllPass('2 + 2i')"><i class="lni lni-text-format"></i><span>a = 2 + 2j</span></a>
         <input type="checkbox" onclick="addOrRemove(this, '2 + 2i')"></li>
         <li><a href="#" onclick="showZplaneForAllPass('2 - 2i')" ondblclick="addNewAllPass('2 - 2i')"><i class="lni lni-text-format" ></i><span>a = 2 - 2j</span></a>
@@ -114,11 +114,10 @@ function addNewZero() {
     setZplane(poles, zeros);
 }
 
-// Get the input field
-var allPassValue = document.getElementById("NewAllPassValue");
+// // Get the input field
+// var allPassValue = document.getElementById("");
 
-// Execute a function when the user releases a key on the keyboard
-allPassValue.addEventListener("keyup", function(event) {
+$("#NewAllPassValue").keydown(function(event) {
   // Number 13 is the "Enter" key on the keyboard
   if (event.keyCode === 13) {
     // Cancel the default action, if needed
@@ -130,6 +129,26 @@ allPassValue.addEventListener("keyup", function(event) {
         <input type=\"checkbox\" onclick=\"addOrRemove(this, '" + input + "')\"></li>";
   }
 });
+
+function addNew() {
+    let target = document.getElementById("allpass_lib");
+    let input = document.getElementById("NewAllPassValue").value;
+    target.innerHTML += "<li><a href=\"#\" onclick=\"showZplaneForAllPass('" + input + "')\" ondblclick=\"addNewAllPass('" + input + "')\"><i class=\"lni lni-text-format\" ></i><span>a = "+ input + "</span></a>\
+        <input type=\"checkbox\" onclick=\"addOrRemove(this, '" + input + "')\"></li>";   
+}
+// // Execute a function when the user releases a key on the keyboard
+// allPassValue.addEventListener("keyup", function(event) {
+//   // Number 13 is the "Enter" key on the keyboard
+//   if (event.keyCode === 13) {
+//     // Cancel the default action, if needed
+//     event.preventDefault();
+//     // Trigger the button element with a click
+//     let target = document.getElementById("allpass_lib");
+//     let input = document.getElementById("NewAllPassValue").value;
+//     target.innerHTML += "<li><a href=\"#\" onclick=\"showZplaneForAllPass('" + input + "')\" ondblclick=\"addNewAllPass('" + input + "')\"><i class=\"lni lni-text-format\" ></i><span>a = "+ input + "</span></a>\
+//         <input type=\"checkbox\" onclick=\"addOrRemove(this, '" + input + "')\"></li>";
+//   }
+// });
 
 function addNewAllPass(a) {
     allPass.push(math.complex(a));
