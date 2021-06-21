@@ -17,16 +17,17 @@
       <button class="button-menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 385 385">
           <path d="M12 120.3h361a12 12 0 000-24H12a12 12 0 000 24zM373 180.5H12a12 12 0 000 24h361a12 12 0 000-24zM373 264.7H132.2a12 12 0 000 24H373a12 12 0 000-24z" />
         </svg></button>
-      <input type="search" placeholder="Search Documentation..." />
+      <!-- <input type="search" placeholder="Search Documentation..." /> -->
     </div>
   </div>
   <div class="main">
     <div class="sidebar">
       <ul>
-        <li><a href="#"><i class="lni lni-text-format"></i><span>a = 2 + 2j</span></a></li>
-        <li><a href="#"><i class="lni lni-text-format"></i><span>a = 2 - 2j</span></a></li>
-        <li><a href="#"><i class="lni lni-text-format"></i><span>a = 1 + 2j</span></a></li>
-        <li><a href="#"><i class="lni lni-text-format"></i><span>a = 2 + 1j</span></a></li>
+        <li><a href="#" onclick="showZplaneForAllPass('2 + 2i')" ondblclick="addNewAllPass('2 + 2j')"><i class="lni lni-text-format"></i><span>a = 2 + 2j</span></a></li>
+        <li><a href="#" onclick="showZplaneForAllPass('2 - 2i')" ondblclick="addNewAllPass('2 - 2j')"><i class="lni lni-text-format" ></i><span>a = 2 - 2j</span></a></li>
+        <li><a href="#" onclick="showZplaneForAllPass('1 + 2i')" ondblclick="addNewAllPass('1 + 2j')"><i class="lni lni-text-format" ></i><span>a = 1 + 2j</span></a></li>
+        <li><a href="#" onclick="showZplaneForAllPass('2 + 1i')" ondblclick="addNewAllPass('2 + 1j')"><i class="lni lni-text-format" ></i><span>a = 2 + 1j</span></a></li>
+        <li><a href="#"><i class="lni lni-text-format" onclick="addNewAllPassParameter()"></i><span>add New...</span></a></li>        
       </ul>
     </div>
     <div class="page-content">
@@ -42,13 +43,24 @@
         <label> add Conjugates</label>
         <input type="checkbox" id="allPassEffect" onclick="setZplane(poles, zeros)">
         <label> with all Pass filters</label>
-        <div id="design_responses">
-            <div id="mag_response" style="width:500px;height:200px;"></div>
-            <div id="phase_response" style="width:500px;height:200px;"></div>
-        </div>
+    </div>
+    <div id="design_responses">
+        <div id="mag_response" style="width:500px;height:200px;"></div>
+        <div id="phase_response" style="width:500px;height:200px;"></div>
+    </div>
+  </div>  
+</div>
+<div id="allpass">
+    <div>
+      <canvas id="allpass_zplane_polezero2" width=300 height=300></canvas>
+    </div>
+    <div>
+      <div id="allpass_phase_response" style="width:600px;height:300px;"></div>
+    </div>
+    <div>
+      <label>a = </label><input type="text" id="NewAllPassValue">
     </div>
   </div>
-</div>
 
 <script src="layout.js" type="text/javascript"></script>
 <script>
@@ -375,9 +387,9 @@ function setZplane(poles, zeros) {
 }
 
 function showZplaneForAllPass(a) {
-    let zero = math.divide(1, math.conj(math.complex(a)));
+    let zero = math.divide(math.complex(1,0), math.conj(math.complex(a)));
     let pole = math.complex(a);
-    var radius = 100;	// radius of unit circle
+    var radius = 50;	// radius of unit circle
     var pSize = 4;		// size of pole and zero graphic
     var zSize = 4;
 
@@ -427,12 +439,12 @@ function showZplaneForAllPass(a) {
     ctx.arc(x + pad, y + pad, zSize, 0, 2*Math.PI);
     ctx.stroke();
 
-    drawResponseOfAllPass(math.complex(a));
+    drawResponseOfAllPass(a);
 }
 
-function drawResponseOfAllPass() {
-    let zero = math.divide(1, math.conj(a));
-    let pole = a;
+function drawResponseOfAllPass(a) {
+    let zero = math.divide(1, math.conj(math.complex(a)));
+    let pole = math.complex(a);
     let magResponse = [];
     let phaseResponse = [];
     for(let i = 0; i < 100; i++){
@@ -466,14 +478,10 @@ function drawResponseOfAllPass() {
         phaseData.push([freqAxis[i], phaseResponse[i]]);
         // console.log(phaseResponse[i]);
     }
-
-    // plot mag_response
-	var container = document.getElementById('allpass_mag_response');
-    graph = Flotr.draw(container, [ magData ], { yaxis: { max : 10, min : 0 } });
     
     // plot phase_response
     var container = document.getElementById('allpass_phase_response');
-    graph = Flotr.draw(container, [ phaseData ], { yaxis: { max : 120, min : -120 } });
+    graph = Flotr.draw(container, [ phaseData ], { yaxis: { max : 60, min : -60 } });
 }
 
 function drawResponses() {
