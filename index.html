@@ -209,7 +209,7 @@ function pointHittest(x, y, textIndex) {
     // console.log("poles.length is " + poles.length);
     if(textIndex >= polesNum){
         // console.log("check some zero!");
-        return (x >= zeros[textIndex - polesNum][0] - 0.05 && x <= zeros[textIndex - polesNum][0] + 0.05 && y >= zeros[textIndex - polesNum][1] - 0.05 && y <= zeros[textIndex - polesNum][1] + 0.05);
+        return (x >= zeros[textIndex - polesNum][0] - 0.2 && x <= zeros[textIndex - polesNum][0] + 0.2 && y >= zeros[textIndex - polesNum][1] - 0.2 && y <= zeros[textIndex - polesNum][1] + 0.2);
     }
     if(textIndex < polesNum){
         // console.log("check some pole!");
