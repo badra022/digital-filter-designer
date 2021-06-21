@@ -22,12 +22,16 @@
   </div>
   <div class="main">
     <div class="sidebar">
-      <ul>
-        <li><a href="#" onclick="showZplaneForAllPass('2 + 2i')" ondblclick="addNewAllPass('2 + 2j')"><i class="lni lni-text-format"></i><span>a = 2 + 2j</span></a></li>
-        <li><a href="#" onclick="showZplaneForAllPass('2 - 2i')" ondblclick="addNewAllPass('2 - 2j')"><i class="lni lni-text-format" ></i><span>a = 2 - 2j</span></a></li>
-        <li><a href="#" onclick="showZplaneForAllPass('1 + 2i')" ondblclick="addNewAllPass('1 + 2j')"><i class="lni lni-text-format" ></i><span>a = 1 + 2j</span></a></li>
-        <li><a href="#" onclick="showZplaneForAllPass('2 + 1i')" ondblclick="addNewAllPass('2 + 1j')"><i class="lni lni-text-format" ></i><span>a = 2 + 1j</span></a></li>
-        <li><a href="#"><i class="lni lni-text-format" onclick="addNewAllPassParameter()"></i><span>add New...</span></a></li>        
+      <ul id="allpass_lib">
+        <li><label>a = </label><input type="text" id="NewAllPassValue"></li>
+        <li><a href="#" onclick="showZplaneForAllPass('2 + 2i')" ondblclick="addNewAllPass('2 + 2i')"><i class="lni lni-text-format"></i><span>a = 2 + 2j</span></a>
+        <input type="checkbox" onclick="addOrRemove(this, '2 + 2i')"></li>
+        <li><a href="#" onclick="showZplaneForAllPass('2 - 2i')" ondblclick="addNewAllPass('2 - 2i')"><i class="lni lni-text-format" ></i><span>a = 2 - 2j</span></a>
+        <input type="checkbox" onclick="addOrRemove(this, '2 - 2i')"></li>
+        <li><a href="#" onclick="showZplaneForAllPass('1 + 2i')" ondblclick="addNewAllPass('1 + 2i')"><i class="lni lni-text-format" ></i><span>a = 1 + 2j</span></a>
+        <input type="checkbox" onclick="addOrRemove(this, '1 + 2i')"></li>
+        <li><a href="#" onclick="showZplaneForAllPass('2 + 1i')" ondblclick="addNewAllPass('2 + 1i')"><i class="lni lni-text-format" ></i><span>a = 2 + 1j</span></a>
+        <input type="checkbox" onclick="addOrRemove(this, '2 + 1i')"></li>
       </ul>
     </div>
     <div class="page-content">
@@ -57,9 +61,9 @@
     <div>
       <div id="allpass_phase_response" style="width:600px;height:300px;"></div>
     </div>
-    <div>
+    <!-- <div>
       <label>a = </label><input type="text" id="NewAllPassValue">
-    </div>
+    </div> -->
   </div>
 
 <script src="layout.js" type="text/javascript"></script>
@@ -74,6 +78,7 @@ var scrollX = $canvas.scrollLeft();
 var scrollY = $canvas.scrollTop();
 
 const conjugateTag = document.getElementById('conjugate');
+const allPassEffect = document.getElementById('allPassEffect');
 
 // variables to save last mouse position
 // used to see how far the user dragged the mouse
@@ -109,14 +114,44 @@ function addNewZero() {
     setZplane(poles, zeros);
 }
 
+// Get the input field
+var allPassValue = document.getElementById("NewAllPassValue");
+
+// Execute a function when the user releases a key on the keyboard
+allPassValue.addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    let target = document.getElementById("allpass_lib");
+    let input = document.getElementById("NewAllPassValue").value;
+    target.innerHTML += "<li><a href=\"#\" onclick=\"showZplaneForAllPass('" + input + "')\" ondblclick=\"addNewAllPass('" + input + "')\"><i class=\"lni lni-text-format\" ></i><span>a = "+ input + "</span></a>\
+        <input type=\"checkbox\" onclick=\"addOrRemove(this, '" + input + "')\"></li>";
+  }
+});
+
 function addNewAllPass(a) {
     allPass.push(math.complex(a));
+    allPassNum = allPassNum + 1;
+    setZplane(poles, zeros);
 }
 
 function removeAllPassFilter(a) {
     allPass = allPass.filter(function(value, index, arr) {
         return !math.equal(value, math.complex(a));
     });
+    allPassNum = allPassNum - 1;
+    setZplane(poles, zeros);
+}
+
+function addOrRemove(cb, a) {
+    if(cb.checked) {
+        addNewAllPass(a);
+    }
+    else {
+        removeAllPassFilter(a);
+    }
 }
 
 function clearAllPoints() {
@@ -171,8 +206,8 @@ function handleMouseDown(e) {
     e.preventDefault();
     startX = parseInt(e.clientX - offsetX);
     startY = parseInt(e.clientY - offsetY);
-    console.log("you selected point [" + startX + ", " + startY + "]");
-    console.log("which is point [" + (startX+70)/100 + ", " + -(startY-150)/100 + "]");
+    // console.log("you selected point [" + startX + ", " + startY + "]");
+    // console.log("which is point [" + (startX+70)/100 + ", " + -(startY-150)/100 + "]");
 
     // console.log("poles number is " + poles.length);
     // console.log("zeros number is " + zeros.length);
@@ -387,59 +422,62 @@ function setZplane(poles, zeros) {
 }
 
 function showZplaneForAllPass(a) {
-    let zero = math.divide(math.complex(1,0), math.conj(math.complex(a)));
-    let pole = math.complex(a);
-    var radius = 50;	// radius of unit circle
-    var pSize = 4;		// size of pole and zero graphic
-    var zSize = 4;
+    if(a != '') {
+        let zero = math.divide(math.complex(1,0), math.conj(math.complex(a)));
+        let pole = math.complex(a);
+        var radius = 50;	// radius of unit circle
+        var pSize = 4;		// size of pole and zero graphic
+        var zSize = 4;
 
-    var c=document.getElementById("allpass_zplane_polezero2");
-    var ctx=c.getContext("2d");
+        var c=document.getElementById("allpass_zplane_polezero2");
+        var ctx=c.getContext("2d");
 
-    ctx.clearRect(0, 0, c.width, c.height);
+        ctx.clearRect(0, 0, c.width, c.height);
 
-    var pad = (c.width - 2 * radius) / 2; // padding on each side
+        var pad = (c.width - 2 * radius) / 2; // padding on each side
 
-    // unit circle
-    ctx.beginPath();
-    ctx.strokeStyle="red";
-    ctx.arc(radius+pad,radius+pad,radius,0,2*Math.PI);
-    ctx.stroke();
+        // unit circle
+        ctx.beginPath();
+        ctx.strokeStyle="red";
+        ctx.arc(radius+pad,radius+pad,radius,0,2*Math.PI);
+        ctx.stroke();
 
-    // y axis
-    ctx.beginPath(); 
-    //ctx.lineWidth="1";
-    ctx.strokeStyle="lightgray";
-    ctx.moveTo(radius+pad,0);
-    ctx.lineTo(radius+pad,c.height);
-    ctx.font = "italic 8px sans-serif";
-    ctx.fillText("Im", radius+pad+2, pad-2);
+        // y axis
+        ctx.beginPath(); 
+        //ctx.lineWidth="1";
+        ctx.strokeStyle="lightgray";
+        ctx.moveTo(radius+pad,0);
+        ctx.lineTo(radius+pad,c.height);
+        ctx.font = "italic 8px sans-serif";
+        ctx.fillText("Im", radius+pad+2, pad-2);
 
-    // x axis
-    ctx.moveTo(0,radius+pad);
-    ctx.lineTo(c.width,radius+pad);
-    ctx.fillText("Re", radius+radius+pad+2, radius+pad-2);
-    ctx.stroke(); // Draw it
+        // x axis
+        ctx.moveTo(0,radius+pad);
+        ctx.lineTo(c.width,radius+pad);
+        ctx.fillText("Re", radius+radius+pad+2, radius+pad-2);
+        ctx.stroke(); // Draw it
 
-    // pole
-    ctx.strokeStyle="blue";
-    let x = radius + Math.round(radius * pole.re);
-    let y = radius - Math.round(radius * pole.im);
-    ctx.beginPath();
-    ctx.moveTo(x - pSize + pad, y - pSize + pad);
-    ctx.lineTo(x + pSize + pad, y + pSize + pad);
-    ctx.moveTo(x - pSize + pad, y + pSize + pad);
-    ctx.lineTo(x + pSize + pad, y - pSize + pad);
-    ctx.stroke();
+        // pole
+        ctx.strokeStyle="blue";
+        let x = radius + Math.round(radius * pole.re);
+        let y = radius - Math.round(radius * pole.im);
+        ctx.beginPath();
+        ctx.moveTo(x - pSize + pad, y - pSize + pad);
+        ctx.lineTo(x + pSize + pad, y + pSize + pad);
+        ctx.moveTo(x - pSize + pad, y + pSize + pad);
+        ctx.lineTo(x + pSize + pad, y - pSize + pad);
+        ctx.stroke();
 
-    // zero
-    x = radius + Math.round(radius * zero.re);
-    y = radius - Math.round(radius * zero.im);
-    ctx.beginPath();
-    ctx.arc(x + pad, y + pad, zSize, 0, 2*Math.PI);
-    ctx.stroke();
+        // zero
+        x = radius + Math.round(radius * zero.re);
+        y = radius - Math.round(radius * zero.im);
+        ctx.beginPath();
+        ctx.arc(x + pad, y + pad, zSize, 0, 2*Math.PI);
+        ctx.stroke();
 
-    drawResponseOfAllPass(a);
+        drawResponseOfAllPass(a);
+    }
+
 }
 
 function drawResponseOfAllPass(a) {
@@ -481,7 +519,7 @@ function drawResponseOfAllPass(a) {
     
     // plot phase_response
     var container = document.getElementById('allpass_phase_response');
-    graph = Flotr.draw(container, [ phaseData ], { yaxis: { max : 60, min : -60 } });
+    graph = Flotr.draw(container, [ phaseData ], { yaxis: { max : 5, min : -5 } });
 }
 
 function drawResponses() {
@@ -539,7 +577,7 @@ function drawResponses() {
     
     // plot phase_response
     var container = document.getElementById('phase_response');
-    graph = Flotr.draw(container, [ phaseData ], { yaxis: { max : 120, min : -120 } });
+    graph = Flotr.draw(container, [ phaseData ], { yaxis: { max : 4, min : -4 } });
 }
 
 

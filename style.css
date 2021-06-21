@@ -8,7 +8,7 @@
   }
   .container {
     display: flex;
-    height: 70vh;
+    height: 80vh;
     width: 100vw;
     flex-wrap: wrap;
     overflow: hidden;
@@ -151,7 +151,7 @@
 #allpass {
     background-color: #e8ecef;
     display: flex;
-    height: 60vh;
+    height: 50vh;
     width: 100vw;
     margin-left: 240px;
     flex-wrap: wrap;
